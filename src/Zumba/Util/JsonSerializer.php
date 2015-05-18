@@ -230,7 +230,11 @@ class JsonSerializer {
 		}
 
 		$ref = new ReflectionClass($className);
-		$obj = $ref->newInstanceWithoutConstructor();
+        try {
+    		$obj = $ref->newInstanceWithoutConstructor();
+        } catch(\ReflectionException $e) {
+            $obj = $ref->newInstanceArgs([]);
+        }
 		$this->objectMapping[$this->objectMappingIndex++] = $obj;
 		foreach ($value as $property => $propertyValue) {
 			try {
