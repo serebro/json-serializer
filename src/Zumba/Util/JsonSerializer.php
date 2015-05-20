@@ -229,6 +229,12 @@ class JsonSerializer {
 			return $obj;
 		}
 
+        if ($className === 'MongoId') {
+            $obj = new \MongoId($value['$id']);
+            $this->objectMapping[$this->objectMappingIndex++] = $obj;
+            return $obj;
+        }
+
 		$ref = new ReflectionClass($className);
         try {
     		$obj = $ref->newInstanceWithoutConstructor();
